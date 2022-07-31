@@ -3,14 +3,16 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 function add-user() {
 	clear
-        echo -e "==========-V2RAY/VLESS-=========="
-         echo ""
+        echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo -e "\E[0;100;33m       • ADD V2RAY USER •          \E[0m"
+        echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo ""
 	read -p "Username : " user
 	if grep -qw "$user" /etc/rare/v2ray/clients.txt; then
-		echo -e ""
-		echo -e "User \e[31m$user\e[0m already exist"
-		echo -e ""
-		echo -e "================================="
+	echo -e ""
+	echo -e "User \e[31m$user\e[0m already exist"
+	echo -e ""
+	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo ""
         read -n 1 -s -r -p "Press any key to back on menu"
         v2ray-menu
@@ -80,24 +82,18 @@ EOF
     echo -e "\033[32m[Info]\033[0m v2ray Start Successfully !"
     sleep 2
     clear
-	echo -e "==========-V2RAY/VLESS-=========="
-	echo -e " USERNAME      : $user"
-	echo -e " EXPIRED DATE  : $expired"
+    echo -e "==========-V2RAY/VLESS-=========="
+    echo -e " USERNAME      : $user"
+    echo -e " EXPIRED DATE  : $expired"
     echo -e " JUMLAH HARI   : $duration Hari"
     echo -e " PORT          : $tls"
-    echo -e " USER UUID : $uuid"
+    echo -e " USER UUID     : $uuid"
     echo -e " IP VPS        : $MYIP"
     echo -e " DOMAIN        : $domain"
-	echo -e " BUG DOMAIN    : $BUG"
+    echo -e " BUG DOMAIN    : $BUG"
     echo -e "================================="
-	echo -e " Link VLESS SPLICE: vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=$BUG&type=tcp&headerType=none&host=$BUG#$user"
+    echo -e " VLESS WS      : vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
     echo -e "================================="
-	echo -e " Link VLESS WS: vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
-    echo -e "================================="
-	echo -e " Link TROJAN: trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user"
-    echo -e "================================="
-    echo -e " Link VMESS TLS: ${vmesslink1}"
-	echo -e "================================="
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     v2ray-menu  
