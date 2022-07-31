@@ -174,7 +174,7 @@ cat <<EOF >/etc/rare/xray/conf/04_trojan_gRPC_inbounds.json
                 "clients": [
                     {
                         "password": "9dcc73ba-c90a-4de9-be35-be3da0129768",
-                        "email": "${domain}_trojan_gRPC"
+                        "email": "xmy01.vpnshopee.xyz_trojan_gRPC"
                     }
                 ],
                 "fallbacks": [
@@ -265,185 +265,6 @@ cat <<EOF >/etc/rare/xray/conf/06_VLESS_gRPC_inbounds.json
 ]
 }
 EOF
-
-cat > /etc/rare/xray/conf/vmess-nontls.json << END
-{
-  "log": {
-    "access": "/var/log/xray/xraynt-login.log",
-    "error": "/var/log/xray/xraynt-error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "port": 80,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "alterId": 0
-#xray
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/xrayws",
-          "headers": {
-            "Host": ""
-          }
-         },
-        "quicSettings": {},
-        "sockopt": {
-          "mark": 0,
-          "tcpFastOpen": true
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "domain": "$domain"
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
-    }
-  ],
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
-        ],
-        "outboundTag": "blocked"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
-      }
-    ]
-  }
-}
-END
-
-cat > /etc/rare/xray/vless-nontls.json << END
-{
-  "log": {
-    "access": "/var/log/xray/access2.log",
-    "error": "/var/log/xray/error.log",
-    "loglevel": "info"
-  },
-  "inbounds": [
-    {
-      "port": 8080,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}"
-#xray
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/xrayws",
-          "headers": {
-            "Host": ""
-          }
-         },
-        "quicSettings": {},
-        "sockopt": {
-          "mark": 0,
-          "tcpFastOpen": true
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      },
-      "domain": "$domain"
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
-    }
-  ],
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "0.0.0.0/8",
-          "10.0.0.0/8",
-          "100.64.0.0/10",
-          "169.254.0.0/16",
-          "172.16.0.0/12",
-          "192.0.0.0/24",
-          "192.0.2.0/24",
-          "192.168.0.0/16",
-          "198.18.0.0/15",
-          "198.51.100.0/24",
-          "203.0.113.0/24",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10"
-        ],
-        "outboundTag": "blocked"
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "protocol": [
-          "bittorrent"
-        ]
-      }
-    ]
-  }
-}
-END
-
 # xray
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 31301 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 31299 -j ACCEPT
@@ -451,8 +272,6 @@ iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 31296 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 31304 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 31297 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8000 -j ACCEPT
 # xray
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 31301 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 31299 -j ACCEPT
@@ -460,7 +279,6 @@ iptables -I INPUT -m state --state NEW -m udp -p udp --dport 31296 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 31304 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 31297 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 443 -j ACCEPT
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8000 -j ACCEPT
 iptables-save >/etc/iptables.rules.v4
 netfilter-persistent save
 netfilter-persistent reload
