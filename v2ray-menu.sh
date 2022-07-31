@@ -56,7 +56,7 @@ EOF
 	cat <<EOF >>"/etc/rare/config-user/${user}"
 vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
 vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-direct&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
-vless://$uuid@$BUG.$domain:$tls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/v2rayws#$user
+vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user
 trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user
 ${vmesslink1}
 EOF
@@ -96,9 +96,9 @@ EOF
     echo -e " Domain        : $domain"
 	echo -e " Bug Domain    : $BUG"
     echo -e ""
-	echo -e " Link VLESS SPLICE: vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user"
+	echo -e " Link VLESS SPLICE: vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=$BUG&type=tcp&headerType=none&host=$BUG#$user"
     echo -e ""
-	echo -e " Link VLESS WS: vless://$uuid@$BUG.$domain:$tls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/v2rayws#$user"
+	echo -e " Link VLESS WS: vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
     echo -e ""
 	echo -e " Link TROJAN: trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user"
     echo -e ""
