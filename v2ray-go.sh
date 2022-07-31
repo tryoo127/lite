@@ -11,7 +11,7 @@ Info="${Green_font_prefix}[information]${Font_color_suffix}"
 MYIP=$(wget -qO- ipinfo.io/ip);
 
 clear
-echo -e "${Info} V2ray CORE INSTALLATION"
+echo -e "${Info} V2RAY CORE INSTALLATION"
 # Detect public IPv4 address and pre-fill for the user
 # Domain
 domain=$(cat /etc/rare/xray/domain)
