@@ -223,6 +223,7 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
         "network": "ws",
         "security": "none",
         "wsSettings": {
+         "acceptProxyProtocol": {
           "path": "/v2rayws"
         }
       }
