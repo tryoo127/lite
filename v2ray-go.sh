@@ -166,6 +166,13 @@ cat <<EOF >/etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
         "clients": [],
         "decryption": "none",
         "fallbacks": [
+        "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "alpn": [
+            "http/1.1",
+            "h2"
           {
             "dest": 32296,
             "xver": 1
@@ -176,24 +183,22 @@ cat <<EOF >/etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
             "xver": 0
           },
           {
-            "path": "/v2rayws",
-            "dest": 8000,
-            "xver": 1
+        "dest": 32297,
+        "xver": 1
+        "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+        "path": "/v2rayws",
+          "alpn": [
+            "http/1.1",
+            "h2"
           },
           {
             "path": "/v2rayvws",
             "dest": 32299,
             "xver": 1
           }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "none",
-        "wsSettings": {
-          "alpn": [
-            "http/1.1",
-            "h2"
           ],
           "certificates": [
             {
@@ -211,7 +216,7 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
 {
   "inbounds": [
     {
-      "port": 8000,
+      "port": 32297,
       "listen": "127.0.0.1",
       "protocol": "vless",
       "tag": "V2VLESSWS",
@@ -222,7 +227,7 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
       "streamSettings": {
         "network": "ws",
         "security": "none",
-        "wsSettings": {
+         "wsSettings": {
           "path": "/v2rayws"
         }
       }
