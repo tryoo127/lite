@@ -177,7 +177,7 @@ rm -f /usr/share/nginx/html.zip*
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/Iansoftware/Script-IANVPN/main/badvpn-udpgw64"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/tryoo127/lite/main/badvpn-udpgw64"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
