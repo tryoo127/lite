@@ -191,6 +191,7 @@ cat <<EOF >/etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
         "network": "ws",
         "security": "none",
         "wsSettings": {
+        "path": "/v2rayws"
           "alpn": [
             "http/1.1",
             "h2"
