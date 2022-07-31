@@ -1,3 +1,4 @@
+
 #!/bin/bash
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
@@ -11,7 +12,7 @@ Info="${Green_font_prefix}[information]${Font_color_suffix}"
 MYIP=$(wget -qO- ipinfo.io/ip);
 
 clear
-echo -e "${Info} V2RAY CORE INSTALLATION"
+echo -e "${Info} V2ray CORE INSTALLATION"
 # Detect public IPv4 address and pre-fill for the user
 # Domain
 domain=$(cat /etc/rare/xray/domain)
@@ -166,13 +167,6 @@ cat <<EOF >/etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
         "clients": [],
         "decryption": "none",
         "fallbacks": [
-        "streamSettings": {
-        "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-          "alpn": [
-            "http/1.1",
-            "h2"
           {
             "dest": 32296,
             "xver": 1
@@ -183,22 +177,24 @@ cat <<EOF >/etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
             "xver": 0
           },
           {
-        "dest": 32297,
-        "xver": 1
-        "streamSettings": {
-        "network": "ws",
-        "security": "none",
-        "wsSettings": {
-        "path": "/v2rayws",
-          "alpn": [
-            "http/1.1",
-            "h2"
+            "path": "/v2rayws",
+            "dest": 32297,
+            "xver": 1
           },
           {
             "path": "/v2rayvws",
             "dest": 32299,
             "xver": 1
           }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "alpn": [
+            "http/1.1",
+            "h2"
           ],
           "certificates": [
             {
@@ -227,7 +223,8 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
       "streamSettings": {
         "network": "ws",
         "security": "none",
-         "wsSettings": {
+        "wsSettings": {
+          "acceptProxyProtocol": true,
           "path": "/v2rayws"
         }
       }
@@ -241,8 +238,8 @@ cat <<EOF >/etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json
     {
       "port": 32296,
       "listen": "127.0.0.1",
-      "protocol": "trojan",
-      "tag": "V2trojanTCP",
+      "protocol": "vless",
+      "tag": "V2VLESSWSNTLS",
       "settings": {
         "clients": [],
         "fallbacks": [
@@ -252,10 +249,9 @@ cat <<EOF >/etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json
         ]
       },
       "streamSettings": {
-        "network": "tcp",
+        "network": "ws",
         "security": "none",
-        "tcpSettings": {
-          "acceptProxyProtocol": true
+         "wsSettings": {
         }
       }
     }
@@ -285,6 +281,28 @@ cat <<EOF >/etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
   ]
 }
 EOF
+cat <<EOF >/etc/rare/v2ray/conf/06_VLESS_gRPC_inbounds.json
+{
+    "inbounds":[
+    {
+        "port": 32301,
+        "listen": "127.0.0.1",
+        "protocol": "vless",
+        "tag":"V2VLESSGRPC",
+        "settings": {
+            "clients": [],
+            "decryption": "none"
+        },
+        "streamSettings": {
+            "network": "grpc",
+            "grpcSettings": {
+                "serviceName": "v2raygrpc"
+            }
+        }
+    }
+]
+}
+EOF
 # v2ray
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 32301 -j ACCEPT
@@ -308,7 +326,7 @@ systemctl restart v2ray.service
 systemctl enable v2ray.service
 
 cd /usr/bin
-wget -O v2ray-menu "https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-menu.sh"
+wget -O v2ray-menu "https://raw.githubusercontent.com/tryoo127/recon/main/v2ray-menu.sh"
 chmod +x v2ray-menu
 cd
 systemctl daemon-reload
