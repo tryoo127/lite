@@ -177,7 +177,7 @@ cat <<EOF >/etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
           },
           {
             "path": "/v2rayws",
-            "dest": 32297,
+            "dest": 8000,
             "xver": 1
           },
           {
@@ -211,7 +211,7 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
 {
   "inbounds": [
     {
-      "port": 32297,
+      "port": 8000,
       "listen": "127.0.0.1",
       "protocol": "vless",
       "tag": "V2VLESSWS",
@@ -223,7 +223,6 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
         "network": "ws",
         "security": "none",
         "wsSettings": {
-         "acceptProxyProtocol": {
           "path": "/v2rayws"
         }
       }
