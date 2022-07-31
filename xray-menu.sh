@@ -16,33 +16,53 @@ function add-user() {
         read -n 1 -s -r -p "Press any key to back on menu"
         xray-menu
 	fi
-    read -p "BUG TELCO : " BUG
+    read -p "SNI (BUG)     : " sni
+read -p "Bug Address (Example: www.google.com) : " sub
 	read -p "Duration (day) : " duration
 	uuid=$(cat /proc/sys/kernel/random/uuid)
 	exp=$(date -d +${duration}days +%Y-%m-%d)
 	expired=$(date -d "${exp}" +"%d %b %Y")
 	domain=$(cat /etc/rare/xray/domain)
 	xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS XTLS SPLICE" | cut -d: -f2|sed 's/ //g')"
+	nontls="$(cat ~/log-install.txt | grep -w "XRAY VMESS NON TLS no" | cut -d: -f2|sed 's/ //g')"
+	none="$(cat ~/log-install.txt | grep -w "XRAY VLESS NON TLS" | cut -d: -f2|sed 's/ //g')"
 	email=${user}@${domain}
     cat>/etc/rare/xray/tls.json<<EOF
       {
        "v": "2",
        "ps": "${user}",
-       "add": "${BUG}.${domain}",
+       "add": "${sub}.${domain}",
        "port": "${xtls}",
        "id": "${uuid}",
        "aid": "0",
        "scy": "auto",
        "net": "ws",
        "type": "none",
-       "host": "${BUG}",
+       "host": "${sni}",
        "path": "/xrayvws",
        "tls": "tls",
-       "sni": "${BUG}"
+       "sni": "${sni}"
+}
+EOF
+cat>/etc/rare/xray/nontls.json<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${sub}.${domain}",
+      "port": "${nontls}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/xrayws",
+      "type": "none",
+      "host": "$sni",
+      "tls": "none"
 }
 EOF
     vmess_base641=$( base64 -w 0 <<< $vmess_json1)
+    vmess_base642=$( base64 -w 0 <<< $vmess_json2)
     vmesslink1="vmess://$(base64 -w 0 /etc/rare/xray/tls.json)"
+    vmesslink2="vmess://$(base64 -w 0 /etc/rare/xray/nontls.json)"
 	echo -e "${user}\t${uuid}\t${exp}" >> /etc/rare/xray/clients.txt
     cat /etc/rare/xray/conf/02_VLESS_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","add": "'${domain}'","flow": "xtls-rprx-direct","email": "'${email}'"}]' > /etc/rare/xray/conf/02_VLESS_TCP_inbounds_tmp.json
 	mv -f /etc/rare/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/rare/xray/conf/02_VLESS_TCP_inbounds.json
@@ -52,12 +72,22 @@ EOF
 	mv -f /etc/rare/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/rare/xray/conf/04_trojan_TCP_inbounds.json
     cat /etc/rare/xray/conf/05_VMess_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/xray/conf/05_VMess_WS_inbounds_tmp.json
 	mv -f /etc/rare/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/xray/conf/05_VMess_WS_inbounds.json
+	cat /etc/rare/xray/conf/06_VLESS_gRPC_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}] > /etc/rare/xray/conf/06_VLESS_gRPC_inbounds_temp.json
+	mv -f /etc/rare/xray/conf/06_VLESS_gRPC_inbounds_temp.json /etc/rare/xray/conf/06_VLESS_gRPC_inbounds.json
+	cat /etc/rare/xray/conf/vmess-nontls.json | jq '.settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/xray/conf/vmess-nontls_tmp.json
+	mv -f /etc/rare/xray/conf/vmess-nontls_tmp.json /etc/rare/xray/conf/vmess-nontls.json
+	cat /etc/rare/xray/conf/vless-nontls.json | jq '.settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}]' > /etc/rare/xray/conf/vless-nontls_tmp.json
+	mv -f /etc/rare/xray/conf/vless-nontls_tmp.json /etc/rare/xray/conf/vless-nontls.json
     cat <<EOF >>"/etc/rare/config-user/${user}"
-vless://$uuid@$domain:$xtls?flow=xtls-rprx-direct&encryption=none&security=xtls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
-vless://$uuid@$domain:$xtls?flow=xtls-rprx-splice&encryption=none&security=xtls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user"
-vless://$uuid@$domain:$xtls?encryption=none&security=xtls&sni=$BUG&type=ws&host=$BUG&path=/xrayws#$user
-trojan://$uuid@$domain:$xtls?sni=$BUG#$user
+direct="vless://$uuid@$sub.$domain:$xtls?flow=xtls-rprx-direct&encryption=none&security=xtls&sni=$sni&type=tcp&headerType=none&host=$sni#${user}"
+splice="vless://$uuid@$sub.$domain:$xtls?flow=xtls-rprx-splice&encryption=none&security=xtls&sni=$sni&type=tcp&headerType=none&host=$sni#${user}"
+vlessws="vless://$uuid@$sub.$domain:$xtls?encryption=none&security=xtls&sni=$sni&type=ws&host=$sni&path=/xrayws#${user}"
+trgrpc="trojan://$uuid@$sub.$domain:$xtls?sni=$sni#$user"
+vlessgrpc="vless://${uuid}@$sub.$domain:${vl}?mode=gun&security=tls&encryption=none&type=grpc&serviceName=GunService&sni=${sni}#${user}"
+vlessxws="vless://${uuid}@$sub.$domain:$none?path=/xvless&encryption=none&type=ws&sni=${sni}#${user}"
 ${vmesslink1}
+${vmesslink2}
+
 EOF
     cat <<EOF >>"/etc/rare/config-url/${user}"
   nameserver:
@@ -81,30 +111,37 @@ EOF
     echo -e "\033[32m[Info]\033[0m xray Start Successfully !"
     sleep 2
     clear
+	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-user.log
+    echo -e "\E[0;100;33m    • XRAY USER INFORMATION •      \E[0m" | tee -a /etc/log-create-user.log
+    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"   | tee -a /etc/log-create-user.log
+	echo -e "" | tee -a /etc/log-create-user.log
+	echo -e " Username      : $user" | tee -a /etc/log-create-user.log
+	echo -e " Expired date  : $expired" | tee -a /etc/log-create-user.log
+    echo -e " Jumlah Hari   : $duration Hari" | tee -a /etc/log-create-user.log
+    echo -e " PORT          : $xtls" | tee -a /etc/log-create-user.log
+    echo -e " PORT          : $nontls" | tee -a /etc/log-create-user.log
+    echo -e " PORT          : $none" | tee -a /etc/log-create-user.log
+    echo -e " UUID/PASSWORD : $uuid" | tee -a /etc/log-create-user.log
+	echo -e "" | tee -a /etc/log-create-user.log
+	echo -e " Ip Vps        : $MYIP" | tee -a /etc/log-create-user.log
+    echo -e " Domain        : $domain" | tee -a /etc/log-create-user.log
+	echo -e " Bug Domain    : $sub" | tee -a /etc/log-create-user.log
+	echo -e " Bug SNI       : $sni" | tee -a /etc/log-create-user.log
+    echo -e "" | tee -a /etc/log-create-user.log
+    echo -e " LINK VLESS DIRECT :  ${direct}" | tee -a /etc/log-create-user.log
+    echo -e " LINK VLESS SPLICE :  ${splice}" | tee -a /etc/log-create-user.log
+    echo -e " LINK VLESS GRPC :  ${vlessgrpc}" | tee -a /etc/log-create-user.log
+    echo -e "" | tee -a /etc/log-create-user.log
+	echo -e " LINK VLESS WS: ${vlessws}" | tee -a /etc/log-create-user.log
+    echo -e "" | tee -a /etc/log-create-user.log
+    echo -e " Link VMESS TLS: ${vmesslink1}" | tee -a /etc/log-create-user.log
+	echo -e " LINK TROJAN: ${trgrpc}" | tee -a /etc/log-create-user.log
+    echo -e "" | tee -a /etc/log-create-user.log
+    echo -e " Link VMESS NONE TLS: ${vmesslink2}" | tee -a /etc/log-create-user.log
+    echo -e " LINK VLESS NONE TLS: ${vlessxws}" | tee -a /etc/log-create-user.log
+	echo -e "" | tee -a /etc/log-create-user.log
 	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m    • XRAY USER INFORMATION •      \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
-	echo -e ""   
-	echo -e " Username      : $user"
-	echo -e " Expired date  : $expired"
-    echo -e " Jumlah Hari   : $duration Hari"
-    echo -e " PORT          : $xtls"
-    echo -e " UUID/PASSWORD : $uuid"
-	echo -e ""
-	echo -e " Ip Vps        : $MYIP"
-    echo -e " Domain        : $domain"
-	echo -e " Bug Domain    : $BUG"    	
-    echo -e ""
-    echo -e " LINK VLESS SPLICE :  vless://$uuid@$domain:$xtls?flow=xtls-rprx-splice&encryption=none&security=xtls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user"
-    echo -e ""
-	echo -e " LINK VLESS WS: vless://$uuid@$BUG.$domain:$xtls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/xrayws#$user"
-    echo -e ""
-	echo -e " LINK TROJAN: trojan://$uuid@$BUG.$domain:$xtls?sni=$BUG#$user"
-    echo -e ""
-    echo -e " Link VMESS TLS: ${vmesslink1}"
-	echo -e ""
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo ""
+    echo "" | tee -a /etc/log-create-user.log
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu   
 }
@@ -129,13 +166,26 @@ function delete-user() {
     rm /etc/rare/config-url/${user}
 	uuid="$(cat /etc/rare/xray/clients.txt | grep -w "$user" | awk '{print $2}')"
 	cat /etc/rare/xray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-	mv -f /etc/rare/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/rare/xray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/rare/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/03_VLESS_WS_inbounds_tmp.json
-	mv -f /etc/rare/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/rare/xray/conf/03_VLESS_WS_inbounds.json
-    cat /etc/rare/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' > /etc/rare/xray/conf/04_trojan_TCP_inbounds_tmp.json
-	mv -f /etc/rare/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/rare/xray/conf/04_trojan_TCP_inbounds.json		
-    cat /etc/rare/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/05_VMess_WS_inbounds_tmp.json
-	mv -f /etc/rare/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/xray/conf/05_VMess_WS_inbounds.json
+		mv -f /etc/rare/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/rare/xray/conf/02_VLESS_TCP_inbounds.json
+		
+		cat /etc/rare/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/03_VLESS_WS_inbounds_tmp.json
+		mv -f /etc/rare/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/rare/xray/conf/03_VLESS_WS_inbounds.json
+		
+		cat /etc/rare/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' > /etc/rare/xray/conf/04_trojan_TCP_inbounds_tmp.json
+		mv -f /etc/rare/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/rare/xray/conf/04_trojan_TCP_inbounds.json
+		
+		cat /etc/rare/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/05_VMess_WS_inbounds_tmp.json
+		mv -f /etc/rare/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/xray/conf/05_VMess_WS_inbounds.json
+		
+		cat /etc/rare/xray/conf/06_VLESS_gRPC_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/06_VLESS_gRPC_inbounds_temp.json
+		mv -f /etc/rare/xray/conf/06_VLESS_gRPC_inbounds_temp.json /etc/rare/xray/conf/06_VLESS_gRPC_inbounds.json
+		
+		cat /etc/rare/xray/conf/vmess-nontls.json | jq 'del(settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/vmess-nontls_tmp.json
+	mv -f /etc/rare/xray/conf/vmess-nontls_tmp.json /etc/rare/xray/conf/vmess-nontls.json
+	
+	cat /etc/rare/xray/conf/vless-nontls.json | jq 'del(settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/xray/conf/vless-nontls_tmp.json
+	mv -f /etc/rare/xray/conf/vless-nontls_tmp.json /etc/rare/xray/conf/vless-nontls.json
+	
     sed -i "/\b$user\b/d" /etc/rare/xray/clients.txt
     rm /etc/rare/config-user/${user}
     rm /etc/rare/config-url/${uuid}
@@ -274,6 +324,8 @@ function show-config() {
         xray-menu
 	fi
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS XTLS SPLICE" | cut -d: -f2|sed 's/ //g')"
+	nontls="$(cat ~/log-install.txt | grep -w "XRAY VMESS NON TLS no" | cut -d: -f2|sed 's/ //g')"
+	none="$(cat ~/log-install.txt | grep -w "XRAY VLESS NON TLS" | cut -d: -f2|sed 's/ //g')"
     link=$(cat /etc/rare/config-user/${user})
 	uuid=$(cat /etc/rare/xray/clients.txt | grep -w "$user" | awk '{print $2}')
 	domain=$(cat /etc/rare/xray/domain)
@@ -290,6 +342,8 @@ function show-config() {
 	echo -e " Ip Vps        : $MYIP"
     echo -e " Domain        : $domain"
     echo -e " PORT          : $xtls"
+    echo -e " PORT          : $nontls"
+    echo -e " PORT          : $none"
     echo -e " UUID/PASSWORD : $uuid"
 	echo -e ""
     echo -e " Config :"
@@ -326,6 +380,7 @@ function change-port() {
     sed -i "s/   - XRAY VLESS WS TLS       : $xtls/   - XRAY VLESS WS TLS       : $xtls1/g" /root/log-install.txt
 	sed -i "s/   - XRAY TROJAN TLS         : $xtls/   - XRAY TROJAN TLS         : $xtls1/g" /root/log-install.txt
     sed -i "s/   - XRAY VMESS TLS          : $xtls/   - XRAY VMESS TLS          : $xtls1/g" /root/log-install.txt
+    
     iptables -D INPUT -m state --state NEW -m tcp -p tcp --dport $xtls -j ACCEPT
     iptables -D INPUT -m state --state NEW -m udp -p udp --dport $xtls -j ACCEPT
     iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport $xtls1 -j ACCEPT
