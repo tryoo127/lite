@@ -82,7 +82,7 @@ EOF
     echo -e "\033[32m[Info]\033[0m v2ray Start Successfully !"
     sleep 2
     clear
-    echo -e "==========-V2RAY/VLESS-=========="
+    echo -e "==========-V2RAY USER INFORMATION-=========="
     echo -e " USERNAME      : $user"
     echo -e " EXPIRED DATE  : $expired"
     echo -e " JUMLAH HARI   : $duration Hari"
@@ -91,9 +91,9 @@ EOF
     echo -e " IP VPS        : $MYIP"
     echo -e " DOMAIN        : $domain"
     echo -e " BUG DOMAIN    : $BUG"
-    echo -e "================================="
-    echo -e " VLESS WS      : vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
-    echo -e "================================="
+    echo -e "============================================"
+    echo -e " VLESS NTLS WS : vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
+    echo -e "============================================"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     v2ray-menu  
