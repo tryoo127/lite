@@ -94,7 +94,7 @@ echo " "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e " \E[0;100;33m        • Multi Port Script Lite by Tryoo •            \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo ""
+echo " "
 echo "   >>> Service & Port"  | tee -a log-install.txt
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
 echo "   - XRAY VLESS XTLS DIRECT  : 443"  | tee -a log-install.txt
@@ -102,7 +102,7 @@ echo "   - XRAY VLESS WS TLS       : 443"  | tee -a log-install.txt
 echo "   - XRAY TROJAN TLS         : 443"  | tee -a log-install.txt
 echo "   - XRAY VMESS TLS          : 443"  | tee -a log-install.txt
 echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
-echo ""  | tee -a log-install.txt
+echo " "  | tee -a log-install.txt
 echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
 echo "   - Timezone                 : Asia/Kuala_Lumpur (GMT +8)"  | tee -a log-install.txt
 echo "   - Fail2Ban                 : [ON]"  | tee -a log-install.txt
@@ -122,7 +122,7 @@ echo "   - Restore Data                    " | tee -a log-install.txt
 echo "   - Full Orders For Various Services" | tee -a log-install.txt
 echo ""
 echo -e "\e[33m━━━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━━━━━━\e[0m"
-echo ""
+echo " "
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e ""
 sleep 3
