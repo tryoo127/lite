@@ -3,7 +3,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m    MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
+echo -e "\E[0;100;33m   MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
@@ -40,11 +40,6 @@ echo -e "$green          INSTALL CERT & INSTALL DOMAIN     $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green        PROCESS UPDATE & UPGRADE SELESAI  $NC"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 2
-clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green        INSTALL SCRIPT SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -86,13 +81,13 @@ chmod +x /etc/set.sh
 history -c
 clear
 echo " "
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green  Installation has been completed!!      $NC"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green            INSTALLATION HAS BEEN COMPLETED!!      $NC"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 echo " "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \E[0;100;33m        • MULTI PORT SCRIPT LITE BY TRYOO •            \E[0m"
+echo -e " \E[0;100;33m        • MULTIPORT SCRIPT LITE BY TRYOO •            \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo "   >>> Service & Port"  | tee -a log-install.txt
