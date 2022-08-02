@@ -82,7 +82,7 @@ history -c
 clear
 echo " "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green            INSTALLATION HAS BEEN COMPLETED!!          $NC"
+echo -e "$green         INSTALLATION HAS BEEN COMPLETED!!          $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 echo " "
