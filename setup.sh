@@ -3,12 +3,12 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m   MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
+echo -e "\E[0;100;33m  MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green      MASUKKAN DOMAIN (sub.yourdomain.com) $NC"
+echo -e "$green    MASUKKAN DOMAIN (sub.yourdomain.com) $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 read -p " Hostname / Domain: " host
 mkdir -p /etc/rare
@@ -30,7 +30,7 @@ echo "$host" >> /etc/rare/xray/domain
 echo "$host" >> /root/domain
 clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green     PROCESS UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
+echo -e "$green    PROCESS UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 apt-get update && apt-get upgrade -y && update-grub -y
@@ -82,23 +82,26 @@ history -c
 clear
 echo " "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green            INSTALLATION HAS BEEN COMPLETED!!      $NC"
+echo -e "$green            INSTALLATION HAS BEEN COMPLETED!!          $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 echo " "
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \E[0;100;33m        • MULTIPORT SCRIPT LITE BY TRYOO •            \E[0m"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;100;33m     • MULTIPORT SCRIPT LITE BY TRYOO •           \E[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
-echo "   >>> Service & Port"               | tee -a log-install.txt
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
 echo "   - XRAY VLESS XTLS DIRECT  : 443"  | tee -a log-install.txt
 echo "   - XRAY VLESS WS TLS       : 443"  | tee -a log-install.txt
 echo "   - XRAY TROJAN TLS         : 443"  | tee -a log-install.txt
 echo "   - XRAY VMESS TLS          : 443"  | tee -a log-install.txt
+echo "   - V2RAY VLESS TLS SPLICE  : 80"   | tee -a log-install.txt
+echo "   - V2RAY VLESS TLS DIRECT  : 80"   | tee -a log-install.txt
 echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
+echo "   - V2RAY TROJAN TLS        : 80"   | tee -a log-install.txt
+echo "   - V2RAY VMESS TLS         : 80"   | tee -a log-install.txt
 echo ""
-echo -e "\e[33m━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━━━━\e[0m"
+echo -e "\e[33m━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━\e[0m"
 echo ""
 echo -e ""
 sleep 3
