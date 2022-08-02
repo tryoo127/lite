@@ -3,7 +3,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m MultiPort Script Lite by Tryoo
+echo -e " \E[0;100;33m MultiPort Script Lite by Tryoo          \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 5
 clear
@@ -36,35 +36,31 @@ secs_to_human() {
 start=$(date +%s)
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green SILA TUNGGU SEBENTAR                       $NC"
-echo -e "$green PROSES UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
+echo -e "$gree PROCESS UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 apt-get update && apt-get upgrade -y && update-grub -y
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green PROSES UPDATE & UPGRADE SELESAI  $NC"
+echo -e "$green PROCESS UPDATE & UPGRADE SELESAI  $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 clear
-#install ssh ovpn
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green INSTALLING SCRIPT SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ssh-vpn.sh && chmod +x ssh-vpn.sh && screen -S ssh-vpn ./ssh-vpn.sh
-##install v2ray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green ISSUE CERT & INSTALL DOMAIN     $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
-#Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green          Install XRAY              $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/xray-go.sh && chmod +x xray-go.sh && screen -S xray-go ./xray-go.sh
-#Instal Xray
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green         Install V2RAY              $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -74,6 +70,7 @@ wget https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-go.sh && chmod +
 rm -f /root/ins-vt.sh
 rm -f /root/xray-go.sh
 rm -f /root/v2ray-go.sh
+
 
 cat <<EOF> /etc/systemd/system/autosett.service
 [Unit]
