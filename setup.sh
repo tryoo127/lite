@@ -85,15 +85,15 @@ wget -O /etc/set.sh "https://raw.githubusercontent.com/tryoo127/lite/main/set.sh
 chmod +x /etc/set.sh
 history -c
 clear
-echo "
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green  INSTALLATION HAS BEEN COMPLETED!!      $NC"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo " "
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green  Installation has been completed!!      $NC"
+echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 echo " "
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \E[0;100;33m     • MULTIPORT SCRIPT LITE BY TRYOO •         \E[0m"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \E[0;100;33m        • Multi Port Script Lite by Tryoo •            \E[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo "   >>> Service & Port"  | tee -a log-install.txt
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
@@ -101,7 +101,7 @@ echo "   - XRAY VLESS XTLS DIRECT  : 443"  | tee -a log-install.txt
 echo "   - XRAY VLESS WS TLS       : 443"  | tee -a log-install.txt
 echo "   - XRAY TROJAN TLS         : 443"  | tee -a log-install.txt
 echo "   - XRAY VMESS TLS          : 443"  | tee -a log-install.txt
-echo "   - V2RAY VLESS WS NTLS     : 80" | tee -a log-install.txt
+echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "   >>> Server Information & Other Features"  | tee -a log-install.txt
 echo "   - Timezone                 : Asia/Kuala_Lumpur (GMT +8)"  | tee -a log-install.txt
