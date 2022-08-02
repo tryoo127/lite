@@ -48,7 +48,6 @@ rm -f /root/ins-vt.sh
 rm -f /root/xray-go.sh
 rm -f /root/v2ray-go.sh
 
-
 cat <<EOF> /etc/systemd/system/autosett.service
 [Unit]
 Description=autosetting
@@ -88,10 +87,8 @@ echo "   - V2RAY VLESS TLS DIRECT  : 80"   | tee -a log-install.txt
 echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
 echo ""
 echo -e "\e[33m━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━\e[0m"
-echo ""
 echo -e ""
 sleep 3
-echo -e ""
 rm -f /root/setup.sh
 rm -f /root/.bash_history
 echo -ne "[ ${yell}WARNING${NC} ] Sila tekan (Y) dan Enter "
