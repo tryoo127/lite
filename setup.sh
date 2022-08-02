@@ -91,11 +91,12 @@ echo -e "$green         Install V2RAY              $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-go.sh && chmod +x v2ray-go.sh && screen -S v2ray-go ./v2ray-go.sh
+wget https://raw.githubusercontent.com/tryoo127/lite/main/encrypt.sh && chmod +x encrypt.sh && screen -S encrypt ./encrypt.sh
 
 rm -f /root/ins-vt.sh
 rm -f /root/xray-go.sh
 rm -f /root/v2ray-go.sh
-
+rm -f /root/encrypt.sh
 
 cat <<EOF> /etc/systemd/system/autosett.service
 [Unit]
