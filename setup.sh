@@ -3,7 +3,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m  MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
+echo -e "\E[0;100;33m  MULTIPORT SCRIPT LITE BY XoolVPN       \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
@@ -40,20 +40,8 @@ echo -e "$green          INSTALL CERT & INSTALL DOMAIN     $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green        INSTALL SCRIPT SEDANG DIJALANKAN  $NC"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ssh-vpn.sh && chmod +x ssh-vpn.sh && screen -S ssh-vpn ./ssh-vpn.sh
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green           INSTALL XRAY              $NC"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/xray-go.sh && chmod +x xray-go.sh && screen -S xray-go ./xray-go.sh
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green           INSTALL V2RAY              $NC"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-go.sh && chmod +x v2ray-go.sh && screen -S v2ray-go ./v2ray-go.sh
 
 rm -f /root/ins-vt.sh
@@ -87,7 +75,7 @@ echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━�
 sleep 2
 echo " "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m     • MULTIPORT SCRIPT LITE BY TRYOO •           \E[0m"
+echo -e "\E[0;100;33m     • MULTIPORT SCRIPT LITE BY XoolVPN •           \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
