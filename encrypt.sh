@@ -9,34 +9,33 @@ cd shc-4.0.2/
 make
 make install
 
-
 #Masuk Direktori
 cd /usr/bin
 
 #Encrypt File
-shc -f add-host
-shc -f bbr
-shc -f certv2ray
-shc -f clear-log
-shc -f clearcache
-shc -f ins-vt
-shc -f kernel-updt
-shc -f m-domain
-shc -f m-system
-shc -f menu
-shc -f resett
-shc -f restart
-shc -f setup
-shc -f ssh-vpn
-shc -f status
-shc -f v2ray-go
-shc -f v2ray-menu
-shc -f v2ray-xp
-shc -f vpsinfo
-shc -f xp
-shc -f xray-go
-shc -f xray-menu
-shc -f xray-xp
+shc -r -f add-host
+shc -r -f bbr
+shc -r -f certv2ray
+shc -r -f clear-log
+shc -r -f clearcache
+shc -r -f ins-vt
+shc -r -f kernel-updt
+shc -r -f m-domain
+shc -r -f m-system
+shc -r -f menu
+shc -r -f resett
+shc -r -f restart
+shc -r -f setup
+shc -r -f ssh-vpn
+shc -r -f status
+shc -r -f v2ray-go
+shc -r -f v2ray-menu
+shc -r -f v2ray-xp
+shc -r -f vpsinfo
+shc -r -f xp
+shc -r -f xray-go
+shc -r -f xray-menu
+shc -r -f xray-xp
 
 #Move file
 mv add-host.x addhost
@@ -64,11 +63,12 @@ mv xray-menu.x xray-menu
 mv xray-xp.x xray-xp
 
 #Remove Extension
-rm -f *.x.c
+rm -r -f *.x.c
 clear
-echo -e "Encrypt Shell Susuccessful..." | lolcat
-rm -f encrypt
+echo -e "Encrypt Successfull..." | lolcat 
+rm -r -f encrypt
 cd
 rm -rf shc-4.0.2
 rm -rf 4.0.2.tar.gz
 rm -rf master.zip
+rm -rf encrypt.sh
