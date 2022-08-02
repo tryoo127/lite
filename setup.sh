@@ -1,27 +1,6 @@
 #!/bin/bash
-if [ "${EUID}" -ne 0 ]; then
-		echo "You need to run this script as root"
-		exit 1
-fi
-if [ "$(systemd-detect-virt)" == "openvz" ]; then
-		echo "OpenVZ is not supported"
-		exit 1
-fi
-Blink='\e[5m'
-yell='\e[33m'
-lgreen='\e[92m'
-red='\e[1;31m'
-green='\e[0;32m'
-NC='\e[0m'
 MYIP=$(wget -qO- ipinfo.io/ip);
-
 clear
-if [ -f "/etc/rare/xray/domain" ]; then
-echo "Script Already Installed"
-exit 0
-fi
-clear
-echo ""
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e " \E[0;100;33m Multi Port Script Lite by Tryoo          \E[0m"
@@ -57,13 +36,13 @@ secs_to_human() {
 start=$(date +%s)
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "$green SILA TUNGGU SEBENTAR                       $NC"
-echo -e "$gree PROCESS UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
+echo -e "$green PROSES UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 apt-get update && apt-get upgrade -y && update-grub -y
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green PROCESS UPDATE & UPGRADE SELESAI  $NC"
+echo -e "$green PROSES UPDATE & UPGRADE SELESAI  $NC"
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 clear
