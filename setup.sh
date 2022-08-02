@@ -3,7 +3,7 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m  MULTIPORT SCRIPT LITE BY XoolVPN       \E[0m"
+echo -e "\E[0;100;33m  MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
@@ -75,7 +75,7 @@ echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━�
 sleep 2
 echo " "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m     • MULTIPORT SCRIPT LITE BY XoolVPN •           \E[0m"
+echo -e "\E[0;100;33m     • MULTIPORT SCRIPT LITE BY TRYOO •           \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
