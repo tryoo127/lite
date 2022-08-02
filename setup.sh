@@ -118,7 +118,6 @@ echo "   - Full Orders For Various Services" | tee -a log-install.txt
 echo ""
 echo -e "\e[33m━━━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━━━━━━\e[0m"
 echo ""
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e ""
 sleep 3
 echo -e ""
