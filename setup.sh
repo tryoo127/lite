@@ -3,18 +3,20 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 echo ""
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
+echo -e "\E[0;100;33m    MULTIPORT SCRIPT LITE BY TRYOO       \E[0m"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 3
 clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green SILA MASUKKAN DOMAIN (sub.yourdomain.com) $NC"
+echo -e "$green      MASUKKAN DOMAIN (sub.yourdomain.com) $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 read -p " Hostname / Domain: " host
 mkdir -p /etc/rare
 mkdir -p /etc/rare/xray
 mkdir -p /etc/rare/v2ray
 mkdir -p /etc/rare/tls
+mkdir -p /etc/rare/config-url
+mkdir -p /etc/rare/config-user
 mkdir -p /etc/rare/xray/conf
 mkdir -p /etc/rare/v2ray/conf
 mkdir -p /etc/systemd/system/
@@ -28,34 +30,33 @@ echo "$host" >> /etc/rare/xray/domain
 echo "$host" >> /root/domain
 clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green SILA TUNGGU SEBENTAR                        $NC"
-echo -e "$green PROCESS UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
+echo -e "$green     PROCESS UPDATE & UPGRADE SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 apt-get update && apt-get upgrade -y && update-grub -y
 clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green INSTALL CERT & INSTALL DOMAIN     $NC"
+echo -e "$green          INSTALL CERT & INSTALL DOMAIN     $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green PROCESS UPDATE & UPGRADE SELESAI  $NC"
+echo -e "$green        PROCESS UPDATE & UPGRADE SELESAI  $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green INSTALL SCRIPT SEDANG DIJALANKAN  $NC"
+echo -e "$green        INSTALL SCRIPT SEDANG DIJALANKAN  $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ssh-vpn.sh && chmod +x ssh-vpn.sh && screen -S ssh-vpn ./ssh-vpn.sh
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green          INSTALL XRAY              $NC"
+echo -e "$green           INSTALL XRAY              $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/xray-go.sh && chmod +x xray-go.sh && screen -S xray-go ./xray-go.sh
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green         INSTALL V2RAY              $NC"
+echo -e "$green           INSTALL V2RAY              $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 wget https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-go.sh && chmod +x v2ray-go.sh && screen -S v2ray-go ./v2ray-go.sh
@@ -84,15 +85,15 @@ wget -O /etc/set.sh "https://raw.githubusercontent.com/tryoo127/lite/main/set.sh
 chmod +x /etc/set.sh
 history -c
 clear
-echo " "
+echo "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "$green  Installation has been completed!!      $NC"
+echo -e "$green  INSTALLATION HAS BEEN COMPLETED!!      $NC"
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
 echo " "
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e " \E[0;100;33m      • Multi Port Script Lite by Tryoo •            \E[0m"
-echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \E[0;100;33m     • MULTIPORT SCRIPT LITE BY TRYOO •         \E[0m"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo "   >>> Service & Port"  | tee -a log-install.txt
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
@@ -119,6 +120,8 @@ echo "   - Admin Control                   " | tee -a log-install.txt
 echo "   - Change port                     " | tee -a log-install.txt
 echo "   - Restore Data                    " | tee -a log-install.txt
 echo "   - Full Orders For Various Services" | tee -a log-install.txt
+echo ""
+echo -e "\e[33m━━━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━━━━━━\e[0m"
 echo ""
 secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
 echo -e ""
