@@ -35,11 +35,16 @@ echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━�
 sleep 2
 apt-get update && apt-get upgrade -y && update-grub -y
 clear
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "$green          INSTALL CERT & INSTALL DOMAIN     $NC"
+echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 sleep 2
+wget https://raw.githubusercontent.com/tryoo127/lite/main/ins-vt.sh && chmod +x ins-vt.sh && screen -S v2ray ./ins-vt.sh
 wget https://raw.githubusercontent.com/tryoo127/lite/main/ssh-vpn.sh && chmod +x ssh-vpn.sh && screen -S ssh-vpn ./ssh-vpn.sh
 wget https://raw.githubusercontent.com/tryoo127/lite/main/xray-go.sh && chmod +x xray-go.sh && screen -S xray-go ./xray-go.sh
 wget https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-go.sh && chmod +x v2ray-go.sh && screen -S v2ray-go ./v2ray-go.sh
 
+rm -f /root/ins-vt.sh
 rm -f /root/xray-go.sh
 rm -f /root/v2ray-go.sh
 
@@ -73,10 +78,13 @@ echo -e "\E[0;100;33m     • MULTIPORT SCRIPT LITE BY TRYOO •           \E[0m
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo "   - XRAY VLESS XTLS SPLICE  : 443"  | tee -a log-install.txt
+echo "   - XRAY VLESS XTLS DIRECT  : 443"  | tee -a log-install.txt
 echo "   - XRAY VLESS WS TLS       : 443"  | tee -a log-install.txt
 echo "   - XRAY TROJAN TLS         : 443"  | tee -a log-install.txt
 echo "   - XRAY VMESS TLS          : 443"  | tee -a log-install.txt
-echo "   - V2RAY VLESS NONE TLS  : 80"   | tee -a log-install.txt
+echo "   - V2RAY VLESS TLS SPLICE  : 80"   | tee -a log-install.txt
+echo "   - V2RAY VLESS TLS DIRECT  : 80"   | tee -a log-install.txt
+echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
 echo ""
 echo -e "\e[33m━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━\e[0m"
 echo -e ""
