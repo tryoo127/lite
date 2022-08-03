@@ -435,9 +435,6 @@ systemctl enable v2ray
 systemctl restart v2ray.service
 systemctl enable v2ray.service
 
-cd /usr/bin
-wget -O v2ray-menu "https://raw.githubusercontent.com/tryoo127/lite/main/v2ray-menu.sh"
-chmod +x v2ray-menu
 cd
 systemctl daemon-reload
 systemctl restart nginx
