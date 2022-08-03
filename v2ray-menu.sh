@@ -3,16 +3,16 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 function add-user() {
 	clear
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m       • ADD V2RAY USER •          \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo ""      
+        echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo -e "\E[0;100;33m       • ADD V2RAY USER •          \E[0m"
+        echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo ""
 	read -p "Username : " user
 	if grep -qw "$user" /etc/rare/v2ray/clients.txt; then
-		echo -e ""
-		echo -e "User \e[31m$user\e[0m already exist"
-		echo -e ""
-		echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+	echo -e ""
+	echo -e "User \e[31m$user\e[0m already exist"
+	echo -e ""
+	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo ""
         read -n 1 -s -r -p "Press any key to back on menu"
         v2ray-menu
@@ -47,16 +47,16 @@ EOF
 	echo -e "${user}\t${uuid}\t${exp}" >> /etc/rare/v2ray/clients.txt
     cat /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","add": "'${domain}'","flow": "xtls-rprx-direct","email": "'${email}'"}]' > /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds_tmp.json
 	mv -f /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}]' > /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds_tmp.json
-	mv -f /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds_tmp.json /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds.json
+    cat /etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}]' > /etc/rare/v2ray/conf/03_VLESS_WS_inbounds_tmp.json
+	mv -f /etc/rare/v2ray/conf/03_VLESS_WS_inbounds_tmp.json /etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
     cat /etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"password": "'${uuid}'","email": "'${email}'"}]' > /etc/rare/v2ray/conf/04_trojan_TCP_inbounds_tmp.json
 	mv -f /etc/rare/v2ray/conf/04_trojan_TCP_inbounds_tmp.json /etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json
-    cat /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds_tmp.json
-	mv -f /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds.json
+    cat /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json
+	mv -f /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
 	cat <<EOF >>"/etc/rare/config-user/${user}"
 vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
 vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-direct&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
-vless://$uuid@$BUG.$domain:$tls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/v2rayws#$user
+vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user
 trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user
 ${vmesslink1}
 EOF
@@ -82,31 +82,18 @@ EOF
     echo -e "\033[32m[Info]\033[0m v2ray Start Successfully !"
     sleep 2
     clear
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m   • V2RAY USER INFORMATION •      \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
-	echo -e ""
-	echo -e " Username      : $user"
-	echo -e " Expired date  : $expired"
-    echo -e " Jumlah Hari   : $duration Hari"
+    echo -e "==========-V2RAY USER INFORMATION-=========="
+    echo -e " USERNAME      : $user"
+    echo -e " EXPIRED DATE  : $expired"
+    echo -e " JUMLAH HARI   : $duration Hari"
     echo -e " PORT          : $tls"
-    echo -e " UUID/PASSWORD : $uuid"
-	echo -e ""
-    echo -e " Ip Vps        : $MYIP"
-    echo -e " Domain        : $domain"
-	echo -e " Bug Domain    : $BUG"
-    echo -e ""
-	echo -e " Link VLESS SPLICE: vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user"
-    echo -e ""
-    echo -e " Link VLESS DIRECT: vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-direct&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user"
-    echo -e ""
-	echo -e " Link VLESS WS: vless://$uuid@$BUG.$domain:$tls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/v2rayws#$user"
-    echo -e ""
-	echo -e " Link TROJAN: trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user"
-    echo -e ""
-    echo -e " Link VMESS TLS: ${vmesslink1}"
-	echo -e ""
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e " USER UUID     : $uuid"
+    echo -e " IP VPS        : $MYIP"
+    echo -e " DOMAIN        : $domain"
+    echo -e " BUG DOMAIN    : $BUG"
+    echo -e "============================================"
+    echo -e "VLESS NONE TLS : vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
+    echo -e "============================================"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     v2ray-menu  
@@ -133,12 +120,12 @@ function delete-user() {
 	uuid="$(cat /etc/rare/v2ray/clients.txt | grep -w "$user" | awk '{print $2}')"
 	cat /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds_tmp.json
 	mv -f /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds_tmp.json
-	mv -f /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds_tmp.json /etc/rare/v2ray/conf/03_VLESS_NTLS_inbounds.json
+    cat /etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/03_VLESS_WS_inbounds_tmp.json
+	mv -f /etc/rare/v2ray/conf/03_VLESS_WS_inbounds_tmp.json /etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
     cat /etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' > /etc/rare/v2ray/conf/04_trojan_TCP_inbounds_tmp.json
 	mv -f /etc/rare/v2ray/conf/04_trojan_TCP_inbounds_tmp.json /etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json		
-    cat /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds_tmp.json
-	mv -f /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMESS_NTLS_inbounds.json
+    cat /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json
+	mv -f /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
     sed -i "/\b$user\b/d" /etc/rare/v2ray/clients.txt
     rm /etc/rare/config-user/${user}
     rm /etc/rare/config-url/${uuid}
