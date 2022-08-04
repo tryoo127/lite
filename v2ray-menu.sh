@@ -23,7 +23,7 @@ function add-user() {
 	exp=$(date -d +${duration}days +%Y-%m-%d)
 	expired=$(date -d "${exp}" +"%d %b %Y")
 	domain=$(cat /etc/rare/xray/domain)
-	tls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS TLS SPLICE" | cut -d: -f2|sed 's/ //g')"
+	tls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS NONE TLS" | cut -d: -f2|sed 's/ //g')"
 	email=${user}@${domain}
     cat>/etc/rare/v2ray/tls.json<<EOF
       {
@@ -37,8 +37,6 @@ function add-user() {
        "net": "ws",
        "type": "none",
        "host": "${BUG}",
-       "path": "/v2rayvws",
-       "tls": "tls",
        "sni": "${BUG}"
 }
 EOF
@@ -54,11 +52,7 @@ EOF
     cat /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json
 	mv -f /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
 	cat <<EOF >>"/etc/rare/config-user/${user}"
-vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
-vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-direct&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
 vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user
-trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user
-${vmesslink1}
 EOF
     cat <<EOF >>"/etc/rare/config-url/${user}"
   nameserver:
