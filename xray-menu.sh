@@ -2,15 +2,15 @@
 MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 function add-user() {
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ ADD XRAY USER ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ ADD USER ◎                   \e[0m"
     echo ""
 	read -p "Username  : " user
 	if grep -qw "$user" /etc/rare/xray/clients.txt; then
     echo -e ""
 	echo -e "User \e[31m$user\e[0m already exist"
 	echo -e ""
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu
@@ -105,8 +105,8 @@ EOF
 
 function delete-user() {
 	clear
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ DELETE USER ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ DELETE USER ◎                \e[0m"
     echo -e ""  
 	read -p "Username : " user
 	echo -e ""
@@ -114,7 +114,7 @@ function delete-user() {
     echo -e ""
     echo -e "User \e[31m$user\e[0m does not exist"
     echo ""
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu   
@@ -137,7 +137,7 @@ function delete-user() {
     echo ""
 	echo -e "User \e[32m$user\e[0m deleted Successfully !"
 	echo ""
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu 
@@ -145,15 +145,15 @@ function delete-user() {
 
 function extend-user() {
 	clear
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ USER RENEWAL ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ USER RENEWAL ◎               \e[0m"
     echo ""
 	read -p "Username : " user
 	if ! grep -qw "$user" /etc/rare/xray/clients.txt; then
 	echo -e ""
 	echo -e "User \e[31m$user\e[0m does not exist"
     echo ""
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu 
@@ -168,13 +168,13 @@ function extend-user() {
 	sed -i "/\b$user\b/d" /etc/rare/xray/clients.txt
 	echo -e "$user\t$uuid\t$exp_new" >> /etc/rare/xray/clients.txt
 	clear
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ CHECK USER INFORMATION ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ USER INFORMATION ◎           \e[0m"
     echo ""
 	echo -e "Username     : $user"
 	echo -e "Expired date : $exp"
 	echo -e ""
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu     
@@ -182,8 +182,8 @@ function extend-user() {
 
 function user-list() {
 	clear
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ CHECK USER LIST ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ USER LIST ◎                  \e[0m"
     echo ""
     echo -e  "\e[36mUsername               Exp. Date\e[0m"
     echo ""   
@@ -195,9 +195,9 @@ function user-list() {
 		printf "%-17s %2s\n" "$user" "     $exp_date"
 	done < /etc/rare/xray/clients.txt
 	total=$(wc -l /etc/rare/xray/clients.txt | awk '{print $1}')
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo -e "Total accounts: $total"
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	echo -e ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu
@@ -207,8 +207,8 @@ function user-monitor() {
     clear
 	echo -n > /tmp/other.txt
 	data=($(cat /etc/rare/xray/clients.txt | awk '{print $1}'));
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ CHECK USER LOGIN ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ CHECK USER LOGIN ◎           \e[0m"
     echo ""
 	for akun in "${data[@]}"
 	do
@@ -235,14 +235,14 @@ function user-monitor() {
 	jum2=$(cat /tmp/ipvmess.txt | nl)
 	echo "user : $akun";
 	echo "$jum2";
-    echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	fi
 	rm -rf /tmp/ipvmess.txt
 	done
 	oth=$(cat /tmp/other.txt | sort | uniq | nl)
 	echo "other";
 	echo "$oth";
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	rm -rf /tmp/other.txt
 	echo -e ""
     read -n 1 -s -r -p "Press any key to back on menu"
@@ -250,8 +250,8 @@ function user-monitor() {
 }
 
 function show-config() {
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ XRAY USER CONFIG ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ XRAY USER CONFIG ◎           \e[0m"
     echo -e ""
 	read -p "User : " user
 	if ! grep -qw "$user" /etc/rare/xray/clients.txt; then
@@ -269,8 +269,8 @@ function show-config() {
 	exp_date=$(date -d"${exp}" "+%d %b %Y")
 
 	clear
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ XRAY USER INFORMATION ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ XRAY USER INFO ◎             \e[0m"
 	echo -e ""
 	echo -e " Username      : $user"
 	echo -e " Expired date  : $exp_date"
@@ -282,7 +282,7 @@ function show-config() {
     echo -e " Config :"
 	echo -e " $link"  
 	echo -e ""
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu    
@@ -291,8 +291,8 @@ function show-config() {
 function change-port() {
 	clear
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS XTLS SPLICE" | cut -d: -f2|sed 's/ //g')"
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;37;46m     ◎ CHANGE PORT XRAY ◎         \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ CHANGE PORT ◎                \e[0m"
     
     echo -e ""
 	echo -e "Change Port XRAY TCP XTLS: $xtls"
@@ -300,8 +300,7 @@ function change-port() {
 	read -p "New Port XRAY TCP XTLS: " xtls1
 	if [ -z $xtls1 ]; then
 	echo "Please Input Port"
-	echo -e "\E[0;37;46m     ◎ Moded By 𝑿𝒐𝒐𝒍𝚅𝙿𝙽 ◎       \e[0m"
-echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     change-port  	
@@ -326,13 +325,13 @@ echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━�
     echo -e "\033[32m[Info]\033[0m xray Start Successfully !"
     echo ""
     echo -e "\e[032;1mPort $xtls1 modified Successfully !\e[0m"
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     xray-menu    
     else
     echo "Port $xtls1 is used"
-	echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     change-port      
@@ -340,23 +339,22 @@ echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━�
 }
 
 clear
-echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;37;46m           ◎ XRAY MENU ◎                      \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ XRAY MENU ◎                  \e[0m"
 echo -e
 echo -e " [1]\e[0m•\e[1;36mADD USER\e[0m"
 echo -e " [2]\e[0m•\e[1;36mDELETE USER\e[0m"
 echo -e " [3]\e[0m•\e[1;36mRENEW USER\e[0m"
-echo -e " [4]\e[0m•\e[1;36mLIST USER\e[0m"
+echo -e " [4]\e[0m•\e[1;36mCHECK USER LIST\e[0m"
 echo -e " [5]\e[0m•\e[1;36mCHECK USER LOGIN\e[0m"
-echo -e " [6]\e[0m•\e[1;36mUSER CONFIG\e[0m"
-echo -e " [7]\e[0m•\e[1;36mCHANGE PORT\e[0m"
+echo -e " [6]\e[0m•\e[1;36mCHANGE PORT XRAY\e[0m"
 echo -e
 echo -e " [\e[31m•0\e[0m] \e[31mBACK TO MENU\033[0m"
 echo -e   ""
-echo -e   "Press x or [ Ctrl+C ] • To-Exit"
+echo -e "\E[0;37;46m     ◎ Moded By XoolVPN ◎              \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e ""
-echo -e "\E[0;37;46m     ◎ Moded By 𝑿𝒐𝒐𝒍𝚅𝙿𝙽 ◎       \e[0m"
-echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e   " Press X • To-Exit-Script"
 echo -e ""
 read -p " Select menu : " opt
 echo -e ""
@@ -366,8 +364,7 @@ case $opt in
 3) clear ; extend-user ;;
 4) clear ; user-list ;;
 5) clear ; user-monitor ;;
-6) clear ; show-config ;;
-7) clear ; change-port ;;
+6) clear ; change-port ;;
 0) clear ; menu ;;
 x) exit ;;
 *) echo -e "" ; echo "Terimlah Kasih" ; sleep 1 ; xray-menu ;;
