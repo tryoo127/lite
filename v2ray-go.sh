@@ -230,12 +230,39 @@ cat <<EOF >/etc/rare/v2ray/conf/03_VLESS_WS_inbounds.json
   ]
 }
 EOF
+cat <<EOF >/etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json
+{
+  "inbounds": [
+    {
+      "port": 32296,
+      "listen": "127.0.0.1",
+      "protocol": "trojan",
+      "tag": "V2trojanTCP",
+      "settings": {
+        "clients": [],
+        "fallbacks": [
+          {
+            "dest": "32300"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none",
+        "tcpSettings": {
+          "acceptProxyProtocol": true
+        }
+      }
+    }
+  ]
+}
+EOF
 cat <<EOF >/etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
 {
   "inbounds": [
     {
       "listen": "127.0.0.1",
-      "port":32297 ,
+      "port": 32299,
       "protocol": "vmess",
       "tag": "V2VMessWS",
       "settings": {
@@ -245,6 +272,7 @@ cat <<EOF >/etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
         "network": "ws",
         "security": "none",
         "wsSettings": {
+          "acceptProxyProtocol": true,
           "path": "/v2rayvws"
         }
       }
@@ -253,13 +281,13 @@ cat <<EOF >/etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
 }
 EOF
 # v2ray
-iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 32301 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 32299 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 32296 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 32297 -j ACCEPT
 # v2ray
-iptables -I INPUT -m state --state NEW -m udp -p udp --dport 80 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 8080 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 32301 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 32299 -j ACCEPT
 iptables -I INPUT -m state --state NEW -m udp -p udp --dport 32296 -j ACCEPT

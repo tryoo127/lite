@@ -94,9 +94,6 @@ EOF
     echo -e "============================================"
     echo -e "VLESS NONE TLS : vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
     echo -e "============================================"
-    echo -e "============================================"
-    echo -e "VMESS NONE TLS : ${vmesslink1}"
-    echo -e "============================================"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     v2ray-menu  
