@@ -3,16 +3,16 @@ MYIP=$(wget -qO- ipinfo.io/ip);
 clear
 function add-user() {
 	clear
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m       • ADD V2RAY USER •          \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo ""      
+        echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo -e "\E[0;100;33m       • ADD V2RAY USER •          \E[0m"
+        echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo ""
 	read -p "Username : " user
 	if grep -qw "$user" /etc/rare/v2ray/clients.txt; then
-		echo -e ""
-		echo -e "User \e[31m$user\e[0m already exist"
-		echo -e ""
-		echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+	echo -e ""
+	echo -e "User \e[31m$user\e[0m already exist"
+	echo -e ""
+	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo ""
         read -n 1 -s -r -p "Press any key to back on menu"
         v2ray-menu
@@ -23,7 +23,7 @@ function add-user() {
 	exp=$(date -d +${duration}days +%Y-%m-%d)
 	expired=$(date -d "${exp}" +"%d %b %Y")
 	domain=$(cat /etc/rare/xray/domain)
-	tls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS TLS SPLICE" | cut -d: -f2|sed 's/ //g')"
+	tls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS NONE TLS" | cut -d: -f2|sed 's/ //g')"
 	email=${user}@${domain}
     cat>/etc/rare/v2ray/tls.json<<EOF
       {
@@ -56,40 +56,9 @@ EOF
 	cat <<EOF >>"/etc/rare/config-user/${user}"
 vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
 vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-direct&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user
-vless://$uuid@$BUG.$domain:$tls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/v2rayws#$user
+vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user
 trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user
 ${vmesslink1}
-EOF
-#None-TLS
-	nonetls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS NONE TLS SPLICE" | cut -d: -f2|sed 's/ //g')"
-	email=${user}@${domain}
-    cat>/etc/rare/v2ray/none-tls.json<<EOF
-      {
-       "v": "2",
-       "ps": "${user}",
-       "add": "${BUG}.${domain}",
-       "port": "${nonetls}",
-       "id": "${uuid}",
-       "aid": "0",
-       "scy": "auto",
-       "net": "ws",
-       "type": "none",
-       "host": "${BUG}",
-       "path": "/v2raynonevws"
-}
-EOF
-    vmess_base641=$( base64 -w 0 <<< $nonevmess_json1)
-    nonevmesslink1="vmess://$(base64 -w 0 /etc/rare/v2ray/none-tls.json)"
-	echo -e "${user}\t${uuid}\t${exp}" >> /etc/rare/v2ray/clients.txt
-    cat /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds_tmp.json
-	mv -f /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds_tmp.json /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds.json
-    cat /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}]' > /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds_tmp.json
-	mv -f /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds_tmp.json /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds.json
-    cat /etc/rare/v2raynone/conf/none_VMess_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' > /etc/rare/v2raynone/conf/none_VMess_WS_inbounds_tmp.json
-	mv -f /etc/rare/v2raynone/conf/none_VMess_WS_inbounds_tmp.json /etc/rare/v2raynone/conf/none_VMess_WS_inbounds.json
-	cat <<EOF >>"/etc/rare/config-user/${user}"
-vless://$uuid@$BUG.$domain:$nonetls?encryption=none&security=auto=$BUG&type=ws&host=$BUG&path=/v2raynonews#$user
-${nonevmesslink1}
 EOF
     cat <<EOF >>"/etc/rare/config-url/${user}"
   nameserver:
@@ -110,48 +79,24 @@ EOF
 	base64Result=$(base64 -w 0 /etc/rare/config-user/${user})
     echo ${base64Result} >"/etc/rare/config-url/${uuid}"
     systemctl restart v2ray.service
-    systemctl restart v2raynone.service
     echo -e "\033[32m[Info]\033[0m v2ray Start Successfully !"
     sleep 2
     clear
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m   • V2RAY USER INFORMATION •      \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
-	echo -e ""
-	echo -e " Username      : $user"
-	echo -e " Expired date  : $expired"
-    echo -e " Jumlah Hari   : $duration Hari"
-    echo -e " PORT TLS      : $tls"
-    echo -e " PORT NONE TLS : $nonetls"
-    echo -e " UUID/PASSWORD : $uuid"
-	echo -e ""
-    echo -e " Ip Vps        : $MYIP"
-    echo -e " Domain        : $domain"
-	echo -e " Bug Domain    : $BUG"
-    echo -e ""
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m           • TLS •           \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
-	echo -e ""
-	echo -e " Link VLESS SPLICE: vless://$uuid@$BUG.$domain:$tls?flow=xtls-rprx-splice&encryption=none&security=tls&sni=$BUG&type=tcp&headerType=none&host=$BUG#$user"
-    echo -e ""
-	echo -e " Link VLESS WS: vless://$uuid@$BUG.$domain:$tls?encryption=none&security=tls&sni=$BUG&type=ws&host=$BUG&path=/v2rayws#$user"
-    echo -e ""
-	echo -e " Link TROJAN: trojan://$uuid@$BUG.$domain:$tls?sni=$BUG#$user"
-    echo -e ""
-    echo -e " Link VMESS TLS: ${nonevmesslink1}"
-	echo -e ""
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m         • NONE TLS •          \E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"  
-	echo -e ""
-	echo -e " Link VLESS NONE TLS SPLICE: vless://$uuid@$BUG.$domain:$nonetls?encryption=none&security=auto=$BUG&type=tcp&headerType=none&host=$BUG#$user"
-    echo -e ""
-	echo -e " Link VLESS NONE TLS WS: vless://$uuid@$BUG.$domain:$nonetls?encryption=none&security=auto=$BUG&type=ws&host=$BUG&path=/v2raynonews#$user"
-    echo -e ""
-    echo -e " Link VMESS NONE TLS: ${vmesslink1}"
-	echo -e ""
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "==========-V2RAY USER INFORMATION-=========="
+    echo -e " USERNAME      : $user"
+    echo -e " EXPIRED DATE  : $expired"
+    echo -e " JUMLAH HARI   : $duration Hari"
+    echo -e " PORT          : $tls"
+    echo -e " USER UUID     : $uuid"
+    echo -e " IP VPS        : $MYIP"
+    echo -e " DOMAIN        : $domain"
+    echo -e " BUG DOMAIN    : $BUG"
+    echo -e "============================================"
+    echo -e "VLESS NONE TLS : vless://$uuid@$BUG.$domain:$tls?encryption=none&security=$BUG&type=ws&host=$BUG&path=#$user"
+    echo -e "============================================"
+    echo -e "============================================"
+    echo -e "VMESS NONE TLS : ${vmesslink1}"
+    echo -e "============================================"
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     v2ray-menu  
@@ -187,19 +132,7 @@ function delete-user() {
     sed -i "/\b$user\b/d" /etc/rare/v2ray/clients.txt
     rm /etc/rare/config-user/${user}
     rm /etc/rare/config-url/${uuid}
-    rm /etc/rare/config-url/${user}
-	uuid="$(cat /etc/rare/v2ray/clients.txt | grep -w "$user" | awk '{print $2}')"
-	cat /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds_tmp.json
-	mv -f /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds_tmp.json /etc/rare/v2raynone/conf/none_VLESS_TCP_inbounds.json
-    cat /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds_tmp.json
-	mv -f /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds_tmp.json /etc/rare/v2raynone/conf/none_VLESS_WS_inbounds.json
-    cat /etc/rare/v2raynone/conf/none_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2raynone/conf/none_VMess_WS_inbounds_tmp.json
-	mv -f /etc/rare/v2raynone/conf/none_VMess_WS_inbounds_tmp.json /etc/rare/v2raynone/conf/05_VMess_WS_inbounds.json
-    sed -i "/\b$user\b/d" /etc/rare/v2ray/clients.txt
-    rm /etc/rare/config-user/${user}
-    rm /etc/rare/config-url/${uuid}
 	systemctl restart v2ray.service
-    systemctl restart v2raynone.service
     echo -e "\033[32m[Info]\033[0m v2ray Start Successfully !"
     echo ""
 	echo -e "User \e[32m$user\e[0m deleted Successfully !"
@@ -296,12 +229,6 @@ function user-monitor() {
 	else
 	echo "$ip" >> /tmp/other.txt
 	fi
-    jum1=$(cat /var/log/v2raynone/access.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
-    if [[ "$jum1" = "$ip" ]]; then
-	echo "$jum1" >> /tmp/ipvmess.txt
-	else
-	echo "$ip" >> /tmp/other.txt
-	fi
 	jum2=$(cat /tmp/ipvmess.txt)
 	sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 	done
@@ -340,7 +267,6 @@ function show-config() {
         v2ray-menu
 	fi
     tls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS TLS SPLICE" | cut -d: -f2|sed 's/ //g')"
-    nonetls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS NONE TLS SPLICE" | cut -d: -f2|sed 's/ //g')"
     link=$(cat /etc/rare/config-user/${user})
 	uuid=$(cat /etc/rare/v2ray/clients.txt | grep -w "$user" | awk '{print $2}')
 	domain=$(cat /etc/rare/xray/domain)
@@ -356,8 +282,7 @@ function show-config() {
 	echo -e " Expired date  : $exp_date"
 	echo -e " Ip Vps        : $MYIP"
     echo -e " Domain        : $domain"
-    echo -e " PORT TLS      : $tls"
-    echo -e " PORT NONE TLS : $nonetls"
+    echo -e " PORT          : $tls"
     echo -e " UUID/PASSWORD : $uuid"
 	echo -e ""
     echo -e " Config :"
@@ -419,56 +344,6 @@ function change-port() {
     fi
 }
 
-function change-port2() {
-	clear
-    nonetls="$(cat ~/log-install.txt | grep -w "V2RAY VLESS NONE TLS SPLICE" | cut -d: -f2|sed 's/ //g')"
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e "\E[0;100;33m• CHANGE PORT V2RAY NONE TLS •\E[0m"
-    echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo -e ""
-	echo -e "Change Port V2RAY TCP NONE TLS: $nonetls"
-	echo -e ""
-	read -p "New Port V2RAY TCP NONE TLS: " nonetls1
-	if [ -z $nonetls1 ]; then
-	echo "Please Input Port"
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    change-port2 
-	fi
-	cek=$(netstat -nutlp | grep -w $nonetls1)
-    if [[ -z $cek ]]; then
-    sed -i "s/$tls/$tls1/g" /etc/rare/v2ray/conf/02_VLESS_TCP_inbounds.json
-    sed -i "s/   - V2RAY VLESS NONE TLS SPLICE  : $nonetls/   - V2RAY VLESS NONE TLS SPLICE  : $nonetls1/g" /root/log-install.txt
-    sed -i "s/   - V2RAY VLESS NONE TLS DIRECT  : $nonetls/   - V2RAY VLESS NONE TLS DIRECT  : $nonetls1/g" /root/log-install.txt
-    sed -i "s/   - V2RAY VLESS NONE WS TLS      : $nonetls/   - V2RAY VLESS NONE WS TLS      : $nonetls1/g" /root/log-install.txt
-    sed -i "s/   - V2RAY VMESS NONE TLS         : $nonetls/   - V2RAY VMESS NONE TLS         : $nonetls1/g" /root/log-install.txt
-    iptables -D INPUT -m state --state NEW -m tcp -p tcp --dport $nonetls -j ACCEPT
-    iptables -D INPUT -m state --state NEW -m udp -p udp --dport $nonetls -j ACCEPT
-    iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport $nonetls1 -j ACCEPT
-    iptables -I INPUT -m state --state NEW -m udp -p udp --dport $nonetls1 -j ACCEPT
-    iptables-save > /etc/iptables.up.rules
-    iptables-restore -t < /etc/iptables.up.rules
-    netfilter-persistent save > /dev/null
-    netfilter-persistent reload > /dev/null
-    systemctl restart v2ray > /dev/null
-    ystemctl restart v2raynone > /dev/null
-    echo -e "\033[32m[Info]\033[0m v2ray Start Successfully !"
-    echo ""
-    echo -e "\e[032;1mPort None TLS $nonetls1 modified Successfully !\e[0m"
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    v2ray-menu    
-    else
-    echo "Port $nonetls1 is used"
-	echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-    change-port2    
-    fi
-}
-
 clear
 echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[0;100;33m      • V2RAY CORE MENU •          \E[0m"
@@ -481,7 +356,6 @@ echo -e " [\e[36m•4\e[0m] View user list "
 echo -e " [\e[36m•5\e[0m] Monitor user "
 echo -e " [\e[36m•6\e[0m] Show User config "
 echo -e " [\e[36m•7\e[0m] Change Port V2RAY "
-echo -e " [\e[36m•8\e[0m] Change Port V2RAY NONE TLS "
 echo -e ""
 echo -e " [\e[31m•0\e[0m] \e[31mBACK TO MENU\033[0m"
 echo -e   ""
@@ -499,7 +373,6 @@ case $opt in
 5) clear ; user-monitor ;;
 6) clear ; show-config ;;
 7) clear ; change-port ;;
-8) clear ; change-port2 ;;
 0) clear ; menu ;;	
 x) exit ;;
 *) echo -e "" ; echo "Terimalah Kasih" ; sleep 1 ; v2ray-menu ;;

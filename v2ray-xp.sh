@@ -20,10 +20,6 @@ do
 		mv -f /etc/rare/v2ray/conf/04_trojan_TCP_inbounds_tmp.json /etc/rare/v2ray/conf/04_trojan_TCP_inbounds.json
 		cat /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json
 		mv -f /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
-		cat /etc/rare/v2ray/conf/06_VLESS_NTLS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json
-		mv -f /etc/rare/v2ray/conf/06_VLESS_NTLS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
-		cat /etc/rare/v2ray/conf/07_VMESS_NTLS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' > /etc/rare/v2ray/conf/05_VMess_WS_inbounds_tmp.json
-		mv -f /etc/rare/v2ray/conf/07_VMESS_NTLS_inbounds_tmp.json /etc/rare/v2ray/conf/05_VMess_WS_inbounds.json
 		sed -i "/\b$user\b/d" /etc/rare/v2ray/clients.txt
 		rm /etc/rare/config-user/${user}
 		rm /etc/rare/config-url/${uuid}
