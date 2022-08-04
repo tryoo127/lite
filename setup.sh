@@ -83,7 +83,8 @@ echo "   - XRAY VLESS WS TLS       : 443"  | tee -a log-install.txt
 echo "   - XRAY TROJAN TLS         : 443"  | tee -a log-install.txt
 echo "   - XRAY VMESS TLS          : 443"  | tee -a log-install.txt
 echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
-echo ""
+echo "   - V2RAY VLESS NONE TLS    : 80"   | tee -a log-install.txt
+echo " "
 echo -e "\e[33m━━━━━━━[\e[0m \e[32mSayang Ibu Ayah\e[0m \e[33m]━━━━━━\e[0m"
 echo -e ""
 sleep 3
