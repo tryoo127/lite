@@ -121,3 +121,4 @@ systemctl enable trojan
 cd
 rm -f ins-vt.sh
 cp /root/domain /etc/xray
+
