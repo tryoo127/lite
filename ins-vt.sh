@@ -18,11 +18,13 @@ touch /etc/trojan/akun.conf
 # install SSL
 bash -c "$(wget -O- https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
 mkdir /root/.acme.sh
-curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
-chmod +x /root/.acme.sh/acme.sh
-/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
-~/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/v2ray/v2ray.crt --keypath /etc/v2ray/v2ray.key --ecc
+cd /root/
+wget -O acme.sh https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
+bash acme.sh --install
+rm acme.sh
+cd .acme.sh
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/rare/xray/xray.crt --keypath /etc/rare/xray/xray.key --ecc
 service squid start
 uuid=$(cat /proc/sys/kernel/random/uuid)
 cat <<EOF > /etc/trojan/config.json
@@ -116,4 +118,3 @@ systemctl enable trojan
 cd
 rm -f ins-vt.sh
 cp /root/domain /etc/xray
-
