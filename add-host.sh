@@ -4,12 +4,10 @@ GREEN='\e[0;32m'
 BLUE='\e[0;34m'
 NC='\e[0m'
 MYIP=$(wget -qO- ipinfo.io/ip);
-
 clear
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[0;100;33m     • CHANGE DOMAIN VPS •         \E[0m"
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e ""  
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[0;37;46m        ◎ CHANGE DOMAIN ◎              \e[0m"
+echo -e
 echo "Please Input Your Pointing Domain In Cloudflare "
 read -rp "Domain/Host: " -e host
 rm /etc/rare/xray/domain
@@ -166,8 +164,9 @@ service nginx restart
 echo -e "\033[32m[Info]\033[0m nginx Start Successfully !"
 echo ""
 echo "Location Your Domain : /var/lib/premium-script/ipvps.conf"
-echo ""
-echo -e "\e[33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e
+echo -e "\E[0;37;46m       ◎ Moded By XoolVPN ◎            \e[0m"
+echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 m-domain

@@ -1,5 +1,6 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipinfo.io/ip);
+DOM=$(cat /etc/rare/xray/domain)
 clear
 # Chek Status 
 xtls_xray_status=$(systemctl status xray | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
@@ -39,13 +40,13 @@ if [[ $trojan_server == "running" ]]; then
 else
    status_virus_trojan="Not Running [ \e[31m❌\e[0m ]"
 fi
-
 echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[0;37;46m        ◎ STATUS SERVICE ◎             \e[0m"
 echo -e
-echo -e " ◎ XRAY CORE      : $status_xtls_xray"
-echo -e " ◎ V2RAY CORE     : $status_tls_v2ray"
-echo -e " ◎ XRAY TROJAN    : $status_xtls_xray"
+echo -e " ◎ DOMAIN      : $DOM"
+echo -e " ◎ IP ADDRESS  : $MYIP"
+echo -e " ◎ XRAY CORE   : $status_xtls_xray"
+echo -e " ◎ V2RAY CORE  : $status_tls_v2ray"
 echo -e "\033[0;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[0;37;46m        ◎ VPN PANEL MENU ◎             \e[0m"
 echo -e
