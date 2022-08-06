@@ -1,7 +1,9 @@
 #!/bin/bash
-domain=$(cat /etc/v2ray/domain)
+MYIP=$(wget -qO- ipinfo.io/ip);
+clear
+domain=$(cat /root/domain)
 apt install iptables iptables-persistent -y
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y
+apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
@@ -23,6 +25,7 @@ wget -O acme.sh https://raw.githubusercontent.com/acmesh-official/acme.sh/master
 bash acme.sh --install
 rm acme.sh
 cd .acme.sh
+bash acme.sh --register-account -m tryoo127@gmail.com
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/rare/xray/xray.crt --keypath /etc/rare/xray/xray.key --ecc
 service squid start
